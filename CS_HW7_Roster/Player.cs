@@ -34,7 +34,7 @@ namespace CS_HW7_Roster
             set => this.teamNumber = value >= 0 ? value : 0;
         }
 
-        public string FullName => $"{this.LastName}, {this.FirstName}";
+        public string FullName => $"{this.FirstName} {this.LastName}";
 
         public bool Delete()
         {

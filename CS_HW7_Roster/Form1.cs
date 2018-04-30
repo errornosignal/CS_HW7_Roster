@@ -58,7 +58,7 @@ namespace CS_HW7_Roster
                         }
                     }
                 }
-                this.BindListBox();
+                this.BindComboBox();
             }
             catch (SqlException sQlEx)
             {
@@ -66,12 +66,17 @@ namespace CS_HW7_Roster
             }
         }
 
-        private void BindListBox()
+        private void BindComboBox()
         {
             this.PlayersComboBox.DataSource = null;
             this.PlayersComboBox.DataSource = this.Players;
             this.PlayersComboBox.DisplayMember = "FullName";
             this.PlayersComboBox.ValueMember = "Id";
+        }
+
+        private void PlayersComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            MessageBox.Show("PlayersComboBox_SelectionChangeCommitted");
         }
     }
 }
