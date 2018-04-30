@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Data;
 
 namespace CS_HW7_Roster
@@ -35,6 +36,17 @@ namespace CS_HW7_Roster
         }
 
         public string FullName => $"{this.FirstName} {this.LastName}";
+        
+        public bool Insert()
+        {
+            var dataService = new PlayerDataService();
+            return dataService.Insert(this);
+        }
+
+        public bool Update()
+        {
+            return new PlayerDataService().Update(this);
+        }
 
         public bool Delete()
         {
@@ -45,13 +57,7 @@ namespace CS_HW7_Roster
         {
             return new PlayerDataService().Delete(id);
         }
-
-        public bool Insert()
-        {
-            var dataService = new PlayerDataService();
-            return dataService.Insert(this);
-        }
-
+        
         public override bool Equals(object obj)
         {
             if (!(obj is Player that))
@@ -74,6 +80,10 @@ namespace CS_HW7_Roster
 
         public override bool MapData(DataRow row)
         {
+            this.Id = Convert.ToInt32(row["playerId"]);
+            this.FirstName = row["firstName"].ToString();
+            this.LastName = row["lastName"].ToString();
+            this.TeamNumber = Convert.ToInt32(row["teamNumber"].ToString());
             return base.MapData(row);
         }
     }

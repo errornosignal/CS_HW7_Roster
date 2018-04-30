@@ -33,12 +33,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.DeleteButton = new System.Windows.Forms.Button();
+            this.AcceptButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.ExitButton = new System.Windows.Forms.Button();
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.FirstNameTextBox = new System.Windows.Forms.TextBox();
             this.NumberTextBox = new System.Windows.Forms.TextBox();
@@ -89,59 +89,65 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Number:";
             // 
-            // button1
+            // AddButton
             // 
-            this.button1.Location = new System.Drawing.Point(15, 145);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
+            this.AddButton.Location = new System.Drawing.Point(15, 145);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(75, 23);
+            this.AddButton.TabIndex = 5;
+            this.AddButton.Text = "Add";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
-            // button2
+            // EditButton
             // 
-            this.button2.Location = new System.Drawing.Point(96, 145);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Edit";
-            this.button2.UseVisualStyleBackColor = true;
+            this.EditButton.Location = new System.Drawing.Point(96, 145);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(75, 23);
+            this.EditButton.TabIndex = 6;
+            this.EditButton.Text = "Edit";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
-            // button3
+            // DeleteButton
             // 
-            this.button3.Location = new System.Drawing.Point(177, 145);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Delete";
-            this.button3.UseVisualStyleBackColor = true;
+            this.DeleteButton.Location = new System.Drawing.Point(177, 145);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(75, 23);
+            this.DeleteButton.TabIndex = 7;
+            this.DeleteButton.Text = "Delete";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
-            // button4
+            // AcceptButton
             // 
-            this.button4.Location = new System.Drawing.Point(15, 174);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "Accept";
-            this.button4.UseVisualStyleBackColor = true;
+            this.AcceptButton.Location = new System.Drawing.Point(15, 174);
+            this.AcceptButton.Name = "AcceptButton";
+            this.AcceptButton.Size = new System.Drawing.Size(75, 23);
+            this.AcceptButton.TabIndex = 8;
+            this.AcceptButton.Text = "Accept";
+            this.AcceptButton.UseVisualStyleBackColor = true;
+            this.AcceptButton.Click += new System.EventHandler(this.AcceptButton_Click);
             // 
-            // button5
+            // CancelButton
             // 
-            this.button5.Location = new System.Drawing.Point(96, 174);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 9;
-            this.button5.Text = "Cancel";
-            this.button5.UseVisualStyleBackColor = true;
+            this.CancelButton.Location = new System.Drawing.Point(96, 174);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 9;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // button6
+            // ExitButton
             // 
-            this.button6.Location = new System.Drawing.Point(177, 174);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 10;
-            this.button6.Text = "Exit";
-            this.button6.UseVisualStyleBackColor = true;
+            this.ExitButton.Location = new System.Drawing.Point(177, 174);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(75, 23);
+            this.ExitButton.TabIndex = 10;
+            this.ExitButton.Text = "Exit";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // LastNameTextBox
             // 
@@ -172,12 +178,12 @@
             this.Controls.Add(this.NumberTextBox);
             this.Controls.Add(this.FirstNameTextBox);
             this.Controls.Add(this.LastNameTextBox);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ExitButton);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.AcceptButton);
+            this.Controls.Add(this.DeleteButton);
+            this.Controls.Add(this.EditButton);
+            this.Controls.Add(this.AddButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -198,12 +204,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button AddButton;
+        private System.Windows.Forms.Button EditButton;
+        private System.Windows.Forms.Button DeleteButton;
+        private System.Windows.Forms.Button AcceptButton;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.TextBox LastNameTextBox;
         private System.Windows.Forms.TextBox FirstNameTextBox;
         private System.Windows.Forms.TextBox NumberTextBox;
