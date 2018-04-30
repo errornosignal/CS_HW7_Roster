@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS_HW7_Roster
 {
@@ -58,8 +54,7 @@ namespace CS_HW7_Roster
 
         public override bool Equals(object obj)
         {
-            var that = obj as Player;
-            if (that == null)
+            if (!(obj is Player that))
             {
                 return false;
             }

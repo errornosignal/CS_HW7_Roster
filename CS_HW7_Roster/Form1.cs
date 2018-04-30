@@ -1,13 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using System.Data.SqlClient;
 
 namespace CS_HW7_Roster
@@ -25,11 +20,6 @@ namespace CS_HW7_Roster
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Step 1 - Create a connection to the data store (database)
-            // IMPORTANT - We must have a connection string to connect
-            // to the data store!
-            // Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\smay\Desktop\DataAccess\DataAccess\Player.accdb
-
             this.PlayersComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
             this.Players.Clear();
@@ -68,22 +58,11 @@ namespace CS_HW7_Roster
                         }
                     }
                 }
-
                 this.BindListBox();
-
-                //connection.Open();
-                //var data = new DataSet();
-                //adapter.Fill(data);
-                // Now the dataset has the data from the database. 
-                // once we have a dataset - it is disconnected from 
-                // the data store so we can close the connection 
-                // and command, and adapter. 
-                //connection.Close();
-
             }
-            catch (SqlException sQLEx)
+            catch (SqlException sQlEx)
             {
-
+                Console.Error.WriteLine(sQlEx.Message);
             }
         }
 

@@ -1,9 +1,6 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS_HW7_Roster
 {
@@ -19,7 +16,6 @@ namespace CS_HW7_Roster
         {
             var obj = new T();
             this.Add(obj);
-            //return obj.MapData(table);
             return false;
         }
     }

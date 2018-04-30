@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OleDb;
+﻿
+using System;
 using System.Data.SqlClient;
-using System.Runtime.CompilerServices;
 
 namespace CS_HW7_Roster
 {
@@ -24,17 +19,17 @@ namespace CS_HW7_Roster
         {
             try
             {
-                using (var connection = new SqlCommand(this.ConnectionString))
-                using (var command = new SqlCommand(DeletePlayerQuery/*, connection*/))
+                using (var connection = new SqlConnection(this.ConnectionString))
+                using (var command = new SqlCommand(DeletePlayerQuery, connection))
                 {
-                    //connection.Open();
+                    connection.Open();
                     command.Parameters.AddWithValue("?", id);
                     return command.ExecuteNonQuery() == 1;
                 }
             }
-            catch (SqlException sQLEx)
+            catch (SqlException sQlEx)
             {
-                Console.Error.WriteLine(sQLEx.Message);
+                Console.Error.WriteLine(sQlEx.Message);
                 return false;
             }
         }
@@ -53,9 +48,9 @@ namespace CS_HW7_Roster
                     return command.ExecuteNonQuery() == 1;
                 }
             }
-            catch (SqlException sQLEx)
+            catch (SqlException sQlEx)
             {
-                Console.Error.Write(sQLEx.Message);
+                Console.Error.Write(sQlEx.Message);
                 return false;
             }
         }
