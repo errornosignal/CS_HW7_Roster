@@ -117,65 +117,85 @@ namespace CS_HW7_Roster
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            var player = this.Players[this.PlayersComboBox.SelectedIndex];
+            if (Collection.Count > 0)
+            {
+                var player = this.Players[this.PlayersComboBox.SelectedIndex];
 
-            MessageBox.Show(
-                Player.Delete(player.Id) ?
-                    $"Player {player.FullName} deleted :)" :
-                    "Player not deleted :(");
+                MessageBox.Show(
+                    Player.Delete(player.Id) ? $"Player {player.FullName} deleted :)" : "Player not deleted :(");
+
+                ClearTextBoxes();
+                Form1_Load(sender, e);
+            }
+            else { /*doNothing()*/ }
         }
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
-            var indexToSelect = 0;
-
             var firstName = this.FirstNameTextBox.Text;
             var lastName = this.LastNameTextBox.Text;
             var teamNumber = this.TeamNumberTextBox.Text;
 
-            if (insertOp)
+            if (firstName.Equals("") || lastName.Equals("") || teamNumber.Equals(""))
             {
-                indexToSelect = Collection.Count;
-                var player = new Player()
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    TeamNumber = Convert.ToInt32(teamNumber)
-                };
-
-                MessageBox.Show(
-                    player.Insert() ?
-                        $"Player {player.FullName} inserted :)" :
-                        "Player not inserted :(");
+                MessageBox.Show("You left something blank...");
             }
-            else if (updateOp)
+            else
             {
-                indexToSelect = this.PlayersComboBox.SelectedIndex;
-                var playerToUpdate = this.Players[this.PlayersComboBox.SelectedIndex];
-                var id = playerToUpdate.Id;
+                var indexToSelect = this.PlayersComboBox.SelectedIndex;
 
-                var player = new Player()
+                var teamNumberIsValid = int.TryParse(teamNumber, out var validTeamNumber);
+                if (teamNumberIsValid)
                 {
-                    Id = Convert.ToInt32(id),
-                    FirstName = this.FirstNameTextBox.Text,
-                    LastName = this.LastNameTextBox.Text,
-                    TeamNumber = Convert.ToInt32(this.TeamNumberTextBox.Text)
-                };
+                    if (insertOp)
+                    {
+                        var player = new Player()
+                        {
+                            FirstName = firstName,
+                            LastName = lastName,
+                            TeamNumber = validTeamNumber
+                        };
 
-                MessageBox.Show(
-                    Player.Update(player) ?
-                        $"Player {player.FullName} updated :)" :
-                        "Player not updated :(");
+                        if (player.Insert())
+                        {
+                            indexToSelect = Collection.Count;
+                            MessageBox.Show($"Player {player.FullName} inserted :)");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Player not inserted :(");
+                        }
+                    }
+                    else if (updateOp)
+                    {
+                        var playerToUpdate = this.Players[this.PlayersComboBox.SelectedIndex];
+                        var id = playerToUpdate.Id;
+
+                        var player = new Player()
+                        {
+                            Id = Convert.ToInt32(id),
+                            FirstName = this.FirstNameTextBox.Text,
+                            LastName = this.LastNameTextBox.Text,
+                            TeamNumber = validTeamNumber
+                        };
+
+                        MessageBox.Show(
+                            Player.Update(player) ? $"Player {player.FullName} updated :)" : "Player not updated :(");
+                    }
+
+                    insertOp = false;
+                    updateOp = false;
+
+                    CancelButton.PerformClick();
+                    Form1_Load(sender, e);
+
+                    this.PlayersComboBox.SelectedIndex = indexToSelect;
+                }
+                else
+                {
+                    MessageBox.Show("Team number must be an integer value...");
+                }
             }
-            else { /*doNothing()*/ }
-
-            insertOp = false;
-            updateOp = false;
-
-            CancelButton.PerformClick();
-            Form1_Load(sender, e);
-
-            this.PlayersComboBox.SelectedIndex = indexToSelect;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
