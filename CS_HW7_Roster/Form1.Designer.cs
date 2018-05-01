@@ -174,7 +174,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 216);
+            this.ClientSize = new System.Drawing.Size(266, 212);
             this.Controls.Add(this.TeamNumberTextBox);
             this.Controls.Add(this.FirstNameTextBox);
             this.Controls.Add(this.LastNameTextBox);
@@ -189,6 +189,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PlayersComboBox);
             this.Controls.Add(this.label1);
+            this.MaximumSize = new System.Drawing.Size(282, 250);
+            this.MinimumSize = new System.Drawing.Size(282, 250);
             this.Name = "Form1";
             this.Text = "Team Roster";
             this.Load += new System.EventHandler(this.Form1_Load);

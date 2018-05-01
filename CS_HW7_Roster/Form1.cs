@@ -9,7 +9,8 @@ namespace CS_HW7_Roster
 {
     public partial class Form1 : Form
     {
-        public string ConnectionString { get; } = @"Data Source=DAX;Initial Catalog=Players;Integrated Security=True";
+        public string ConnectionString { get; } = 
+            @"Data Source=DAX;Initial Catalog=Players;Integrated Security=True";
 
         public List<Player> Players { get; } = new List<Player>();
 
@@ -20,6 +21,11 @@ namespace CS_HW7_Roster
         private bool insertOp = false;
         private bool updateOp = false;
 
+        /// <summary>
+        /// Sets initial form load state.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void Form1_Load(object sender, EventArgs e)
         {
             this.PlayersComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -78,6 +84,9 @@ namespace CS_HW7_Roster
             }
         }
 
+        /// <summary>
+        ///Binds datasource to combobox.
+        /// </summary>
         private void BindComboBox()
         {
             this.PlayersComboBox.DataSource = null;
@@ -86,6 +95,12 @@ namespace CS_HW7_Roster
             this.PlayersComboBox.ValueMember = "Id";
         }
 
+        /// <summary>
+        /// Event handler for PlayersComboBox_SelectedValueChanged.
+        /// Displays combobox selected item record details in form textboxes.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void PlayersComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             if (this.PlayersComboBox.SelectedIndex > 0)
@@ -98,6 +113,12 @@ namespace CS_HW7_Roster
             else { /*doNothing()*/ }
         }
 
+        /// <summary>
+        /// Event handler for AddButton_Click.
+        /// Sets appropriate form state upon clicking this button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, EventArgs e)
         {
             insertOp = true;
@@ -107,6 +128,12 @@ namespace CS_HW7_Roster
             EnableAcceptCancel();
         }
 
+        /// <summary>
+        /// Event handler for EditButton_Click.
+        /// Sets appropriate form state upon clicking this button.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void EditButton_Click(object sender, EventArgs e)
         {
             updateOp = true;
@@ -115,6 +142,13 @@ namespace CS_HW7_Roster
             EnableAcceptCancel();
         }
 
+        /// <summary>
+        /// Event handler for DeleteButton_Click.
+        /// Calls method to delete a record matching the provided criteria and provides the user
+        ///     with a success/failure message.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (Collection.Count > 0)
@@ -130,6 +164,13 @@ namespace CS_HW7_Roster
             else { /*doNothing()*/ }
         }
 
+        /// <summary>
+        /// Event handler for AcceptButton_Click.
+        /// Calls methods to either insert a record or updatea a record matching the provided 
+        ///     criteria and provides the user with a success/failure message.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void AcceptButton_Click(object sender, EventArgs e)
         {
             var firstName = this.FirstNameTextBox.Text;
@@ -198,6 +239,12 @@ namespace CS_HW7_Roster
             }
         }
 
+        /// <summary>
+        /// Event handler for CancelButton_Click.
+        /// Resets the form state upon cancellation of add/edit operations.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             ClearTextBoxes();
@@ -208,11 +255,20 @@ namespace CS_HW7_Roster
             this.PlayersComboBox_SelectedValueChanged(sender, e);
         }
 
+        /// <summary>
+        /// Event handler for ExitButton_Click.
+        /// Closes this form.
+        /// </summary>
+        /// <param name="sender">object</param>
+        /// <param name="e">EventArgs</param>
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Clears the forms textboxes on the form.
+        /// </summary>
         private void ClearTextBoxes()
         {
             this.FirstNameTextBox.Clear();
@@ -220,6 +276,9 @@ namespace CS_HW7_Roster
             this.TeamNumberTextBox.Clear();
         }
 
+        /// <summary>
+        /// Enables the relevant textboxes on the form.
+        /// </summary>
         private void EnableTextBoxes()
         {
             this.FirstNameTextBox.Enabled = true;
@@ -227,6 +286,9 @@ namespace CS_HW7_Roster
             this.TeamNumberTextBox.Enabled = true;
         }
 
+        /// <summary>
+        /// Disables the relevant textboxes on the form.
+        /// </summary>
         private void DisableTextBoxes()
         {
             this.FirstNameTextBox.Enabled = false;
@@ -234,13 +296,9 @@ namespace CS_HW7_Roster
             this.TeamNumberTextBox.Enabled = false;
         }
 
-        private void DisableAddEditDelete()
-        {
-            this.AddButton.Enabled = false;
-            this.EditButton.Enabled = false;
-            this.DeleteButton.Enabled = false;
-        }
-
+        /// <summary>
+        /// Enables the relevant buttons on the form.
+        /// </summary>
         private void EnableAddEditDelete()
         {
             this.AddButton.Enabled = true;
@@ -248,12 +306,28 @@ namespace CS_HW7_Roster
             this.DeleteButton.Enabled = true;
         }
 
+        /// <summary>
+        /// DIsables the relevant buttons on the form.
+        /// </summary>
+        private void DisableAddEditDelete()
+        {
+            this.AddButton.Enabled = false;
+            this.EditButton.Enabled = false;
+            this.DeleteButton.Enabled = false;
+        }
+
+        /// <summary>
+        /// Enables the relevant butrtons on the form.
+        /// </summary>
         private void EnableAcceptCancel()
         {
             this.AcceptButton.Enabled = true;
             this.CancelButton.Enabled = true;
         }
 
+        /// <summary>
+        /// Enables the relevant buttons on the form.
+        /// </summary>
         private void DisableAcceptCancel()
         {
             this.AcceptButton.Enabled = false;

@@ -6,32 +6,54 @@ using System.Data.SqlClient;
 
 namespace CS_HW7_Roster
 {
+    /// <summary>
+    /// PlayerDataService class.
+    /// </summary>
     public class PlayerDataService
     {
         private bool insertOp = false;
         private bool updateOp = false;
         private bool deleteOp = false;
         
+        /// <summary>
+        /// Gets datasource connection string.
+        /// </summary>
         private string ConnectionString { get; } = 
             @"Data Source=DAX;Initial Catalog=Players;Integrated Security=True";
 
+        /// <summary>
+        /// Gets query string for insert operation.
+        /// </summary>
         private string InsertPlayerQuery { get; } =
             "INSERT INTO Players (firstName, lastName, teamNumber) " +
             "VALUES (@firstName, @lastName, @teamNumber)";
 
+        /// <summary>
+        /// Gets query string for update operation.
+        /// </summary>
         private string UpdatePlayerQuery { get; } =
             "UPDATE Players " +
             "SET firstName = @firstName, lastName = @lastName, teamNumber = @teamNumber " +
             "WHERE playerId = @playerID";
 
+        /// <summary>
+        /// Gets query string for delete operation.
+        /// </summary>
         private string DeletePlayerQuery { get; } =
             "DELETE FROM Players " +
             "WHERE playerId = @playerID";
-        
+
+        /// <summary>
+        /// Gets query string to select all records in table.
+        /// </summary>
         private string SelectAllQuery { get; } =
             "SELECT playerId, firstName, lastName, teamNumber " +
             "FROM Players";
 
+        /// <summary>
+        /// Gets data set from datasource.
+        /// </summary>
+        /// <returns>DataSet</returns>
         public DataSet GetAll()
         {
             var data = new DataSet();
@@ -53,6 +75,12 @@ namespace CS_HW7_Roster
             }
         }
 
+        /// <summary>
+        /// Performs Innert,Update, or Delete operation on datasource.
+        /// </summary>
+        /// <param name="query">string</param>
+        /// <param name="parameters">params string[]</param>
+        /// <returns>bool</returns>
         private bool ExecuteNonQuery(string query, params string[] parameters)
         {
             try
@@ -115,6 +143,11 @@ namespace CS_HW7_Roster
             } 
         }
 
+        /// <summary>
+        /// Calls ExecuteNonQuery to perform Insert.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>bool</returns>
         public bool Insert(Player player)
         {
             insertOp = true;
@@ -124,6 +157,11 @@ namespace CS_HW7_Roster
                 player.TeamNumber.ToString());
         }
 
+        /// <summary>
+        /// Calls ExecuteNonQuery to perform Update.
+        /// </summary>
+        /// <param name="player">Player</param>
+        /// <returns>bool</returns>
         public bool Update(Player player)
         {
             updateOp = true;
@@ -134,6 +172,11 @@ namespace CS_HW7_Roster
                 player.TeamNumber.ToString());
         }
 
+        /// <summary>
+        /// Calls ExecuteNonQuery to perform Delete..
+        /// </summary>
+        /// <param name="id">int</param>
+        /// <returns>bool</returns>
         public bool Delete(int id)
         {
             deleteOp = true;

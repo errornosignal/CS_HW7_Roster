@@ -4,9 +4,18 @@ using System.Data;
 
 namespace CS_HW7_Roster
 {
-    public abstract class BaseObjectCollection<T> :
-        List<T> where T : BaseObject, new()
+    /// <inheritdoc />
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class BaseObjectCollection<T> : List<T> where T : BaseObject, new()
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataSet">DataSet</param>
+        /// <returns>bool</returns>
         public bool MapObjects(DataSet dataSet)
         {
             if (dataSet != null && dataSet.Tables.Count > 0)
@@ -19,6 +28,11 @@ namespace CS_HW7_Roster
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table">DataSet</param>
+        /// <returns>bool</returns>
         public bool MapObjects(DataTable table)
         {
             this.Clear();
