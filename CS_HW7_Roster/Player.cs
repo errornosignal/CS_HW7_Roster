@@ -11,6 +11,8 @@ namespace CS_HW7_Roster
         private string lastName = string.Empty;
         private int teamNumber = 0;
 
+        public Player player { get; set; }
+
         public int Id
         {
             get => this.id;
@@ -36,7 +38,7 @@ namespace CS_HW7_Roster
         }
 
         public string FullName => $"{this.FirstName} {this.LastName}";
-        
+
         public bool Insert()
         {
             var dataService = new PlayerDataService();
@@ -45,7 +47,12 @@ namespace CS_HW7_Roster
 
         public bool Update()
         {
-            return new PlayerDataService().Update(this);
+            return Player.Update(this.player);
+        }
+        
+        public static bool Update(Player player)
+        {
+            return new PlayerDataService().Update(player);
         }
 
         public bool Delete()
@@ -64,11 +71,13 @@ namespace CS_HW7_Roster
             {
                 return false;
             }
+            else { /*doNothing()*/ }
 
             if (object.ReferenceEquals(this, that))
             {
                 return true;
             }
+            else { /*doNothing()*/ }
 
             return this.Id == that.Id;
         }

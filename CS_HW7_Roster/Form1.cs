@@ -17,13 +17,8 @@ namespace CS_HW7_Roster
 
         public Form1() => this.InitializeComponent();
 
-        private void BindComboBox()
-        {
-            this.PlayersComboBox.DataSource = null;
-            this.PlayersComboBox.DataSource = this.Collection;
-            this.PlayersComboBox.DisplayMember = "FullName";
-            this.PlayersComboBox.ValueMember = "Id";
-        }
+        private bool insertOp = false;
+        private bool updateOp = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -31,16 +26,13 @@ namespace CS_HW7_Roster
 
             this.Collection = PlayerCollection.GetAll();
 
-            this.FirstNameTextBox.Enabled = false;
-            this.LastNameTextBox.Enabled = false;
-            this.NumberTextBox.Enabled = false;
-
-            this.AcceptButton.Enabled = false;
-            this.CancelButton.Enabled = false;
+            DisableTextBoxes();
+            DisableAcceptCancel();
 
             this.Players.Clear();
             const string query = "SELECT playerId, firstName, lastName, teamNumber " +
                                  "FROM Players";
+
             try
             {
                 var data = new DataSet();
@@ -74,7 +66,10 @@ namespace CS_HW7_Roster
                             });
                         }
                     }
+                    else { /*doNothing()*/ }
                 }
+                else { /*doNothing()*/ }
+
                 this.BindComboBox();
             }
             catch (SqlException sQlEx)
@@ -83,47 +78,41 @@ namespace CS_HW7_Roster
             }
         }
 
-        private void PlayersComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        private void BindComboBox()
         {
-            if (this.PlayersComboBox.SelectedIndex >= 0)
+            this.PlayersComboBox.DataSource = null;
+            this.PlayersComboBox.DataSource = this.Collection;
+            this.PlayersComboBox.DisplayMember = "FullName";
+            this.PlayersComboBox.ValueMember = "Id";
+        }
+
+        private void PlayersComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (this.PlayersComboBox.SelectedIndex > 0)
             {
                 var player = this.Players[this.PlayersComboBox.SelectedIndex];
                 this.FirstNameTextBox.Text = player.FirstName;
                 this.LastNameTextBox.Text = player.LastName;
-                this.NumberTextBox.Text = player.TeamNumber.ToString();
-            } // else, they (someone) clicked on something not a person!! DoNothing();
+                this.TeamNumberTextBox.Text = player.TeamNumber.ToString();
+            }
+            else { /*doNothing()*/ }
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            this.FirstNameTextBox.Clear();
-            this.LastNameTextBox.Clear();
-            this.NumberTextBox.Clear();
-
-            this.FirstNameTextBox.Enabled = true;
-            this.LastNameTextBox.Enabled = true;
-            this.NumberTextBox.Enabled = true;
-
-            this.AddButton.Enabled = false;
-            this.EditButton.Enabled = false;
-            this.DeleteButton.Enabled = false;
-
-            this.AcceptButton.Enabled = true;
-            this.CancelButton.Enabled = true;
+            insertOp = true;
+            ClearTextBoxes();
+            EnableTextBoxes();
+            DisableAddEditDelete();
+            EnableAcceptCancel();
         }
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            this.FirstNameTextBox.Enabled = true;
-            this.LastNameTextBox.Enabled = true;
-            this.NumberTextBox.Enabled = true;
-
-            this.AddButton.Enabled = false;
-            this.EditButton.Enabled = false;
-            this.DeleteButton.Enabled = false;
-
-            this.AcceptButton.Enabled = true;
-            this.CancelButton.Enabled = true;
+            updateOp = true;
+            EnableTextBoxes();
+            DisableAddEditDelete();
+            EnableAcceptCancel();
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -138,40 +127,117 @@ namespace CS_HW7_Roster
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
+            var indexToSelect = 0;
+
             var firstName = this.FirstNameTextBox.Text;
             var lastName = this.LastNameTextBox.Text;
-            var teamNumber = this.NumberTextBox.Text;
+            var teamNumber = this.TeamNumberTextBox.Text;
 
-            var player = new Player()
+            if (insertOp)
             {
-                FirstName = firstName,
-                LastName = lastName,
-                TeamNumber = Convert.ToInt32(teamNumber)
-            };
+                indexToSelect = Collection.Count;
+                var player = new Player()
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    TeamNumber = Convert.ToInt32(teamNumber)
+                };
 
-            MessageBox.Show(
-                player.Insert() ?
-                    $"Player {player.FullName} inserted :)" :
-                    "Player not inserted :(");
+                MessageBox.Show(
+                    player.Insert() ?
+                        $"Player {player.FullName} inserted :)" :
+                        "Player not inserted :(");
+            }
+            else if (updateOp)
+            {
+                indexToSelect = this.PlayersComboBox.SelectedIndex;
+                var playerToUpdate = this.Players[this.PlayersComboBox.SelectedIndex];
+                var id = playerToUpdate.Id;
+
+                var player = new Player()
+                {
+                    Id = Convert.ToInt32(id),
+                    FirstName = this.FirstNameTextBox.Text,
+                    LastName = this.LastNameTextBox.Text,
+                    TeamNumber = Convert.ToInt32(this.TeamNumberTextBox.Text)
+                };
+
+                MessageBox.Show(
+                    Player.Update(player) ?
+                        $"Player {player.FullName} updated :)" :
+                        "Player not updated :(");
+            }
+            else { /*doNothing()*/ }
+
+            insertOp = false;
+            updateOp = false;
+
+            CancelButton.PerformClick();
+            Form1_Load(sender, e);
+
+            this.PlayersComboBox.SelectedIndex = indexToSelect;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.FirstNameTextBox.Enabled = false;
-            this.LastNameTextBox.Enabled = false;
-            this.NumberTextBox.Enabled = false;
+            ClearTextBoxes();
+            DisableTextBoxes();
+            EnableAddEditDelete();
+            DisableAcceptCancel();
 
-            this.AddButton.Enabled = false;
-            this.AcceptButton.Enabled = false;
-            this.CancelButton.Enabled = false;
-
-            this.AddButton.Enabled = true;
-            this.EditButton.Enabled = true;
+            this.PlayersComboBox_SelectedValueChanged(sender, e);
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ClearTextBoxes()
+        {
+            this.FirstNameTextBox.Clear();
+            this.LastNameTextBox.Clear();
+            this.TeamNumberTextBox.Clear();
+        }
+
+        private void EnableTextBoxes()
+        {
+            this.FirstNameTextBox.Enabled = true;
+            this.LastNameTextBox.Enabled = true;
+            this.TeamNumberTextBox.Enabled = true;
+        }
+
+        private void DisableTextBoxes()
+        {
+            this.FirstNameTextBox.Enabled = false;
+            this.LastNameTextBox.Enabled = false;
+            this.TeamNumberTextBox.Enabled = false;
+        }
+
+        private void DisableAddEditDelete()
+        {
+            this.AddButton.Enabled = false;
+            this.EditButton.Enabled = false;
+            this.DeleteButton.Enabled = false;
+        }
+
+        private void EnableAddEditDelete()
+        {
+            this.AddButton.Enabled = true;
+            this.EditButton.Enabled = true;
+            this.DeleteButton.Enabled = true;
+        }
+
+        private void EnableAcceptCancel()
+        {
+            this.AcceptButton.Enabled = true;
+            this.CancelButton.Enabled = true;
+        }
+
+        private void DisableAcceptCancel()
+        {
+            this.AcceptButton.Enabled = false;
+            this.CancelButton.Enabled = false;
         }
     }
 }

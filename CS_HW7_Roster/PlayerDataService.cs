@@ -20,7 +20,7 @@ namespace CS_HW7_Roster
             "VALUES (@firstName, @lastName, @teamNumber)";
 
         private string UpdatePlayerQuery { get; } =
-            "UPDATE Player " +
+            "UPDATE Players " +
             "SET firstName = @firstName, lastName = @lastName, teamNumber = @teamNumber " +
             "WHERE playerId = @playerID";
 
@@ -63,32 +63,43 @@ namespace CS_HW7_Roster
                     connection.Open();
                     if (parameters != null)
                     {
-                        //foreach (var param in parameters)
-                        //{
-                            if (insertOp)
+                        if (insertOp)
+                        {
+                            var parameterList = new List<SqlParameter>()
                             {
-                                var parameterList = new List<SqlParameter>()
-                                {
-                                    new SqlParameter("@firstName", SqlDbType.NVarChar)
-                                        { Value = parameters[0]},
-                                    new SqlParameter("@lastName", SqlDbType.NVarChar)
-                                        { Value = parameters[1]},
-                                    new SqlParameter("@teamNumber", SqlDbType.Int)
-                                        { Value = parameters[2]},
-                                };
-                                command.Parameters.AddRange(parameterList.ToArray());
-                            }
-                            else if (updateOp)
+                                new SqlParameter("@firstName", SqlDbType.NVarChar)
+                                    { Value = parameters[0]},
+                                new SqlParameter("@lastName", SqlDbType.NVarChar)
+                                    { Value = parameters[1]},
+                                new SqlParameter("@teamNumber", SqlDbType.Int)
+                                    { Value = parameters[2]}
+                            };
+                            command.Parameters.AddRange(parameterList.ToArray());
+                        }
+                        else if (updateOp)
+                        {
+                            var parameterList = new List<SqlParameter>()
                             {
-                                //ADD CODE FOR UPDATE
-                            }
-                            else if (deleteOp)
+                                new SqlParameter("@playerID", SqlDbType.Int)
+                                    { Value = parameters[0]},
+                                new SqlParameter("@firstName", SqlDbType.NVarChar)
+                                    { Value = parameters[1]},
+                                new SqlParameter("@lastName", SqlDbType.NVarChar)
+                                    { Value = parameters[2]},
+                                new SqlParameter("@teamNumber", SqlDbType.Int)
+                                    { Value = parameters[3]}
+                            };
+                            command.Parameters.AddRange(parameterList.ToArray());
+                        }
+                        else if (deleteOp)
+                        {
+                            foreach (var param in parameters)
                             {
-                                foreach (var param in parameters)
-                                {
                                 command.Parameters.AddWithValue("@playerID", param);
-                                }                            }
-                    } //else, no parameters DoNothing();
+                            }
+                        }
+                    }
+                    else { /*doNothing()*/ }
 
                     insertOp = false;
                     updateOp = false;
@@ -117,7 +128,7 @@ namespace CS_HW7_Roster
         {
             updateOp = true;
             return this.ExecuteNonQuery(this.UpdatePlayerQuery,
-                player.Id.ToString(player.Id.ToString()),
+                player.Id.ToString(),
                 player.FirstName,
                 player.LastName,
                 player.TeamNumber.ToString());

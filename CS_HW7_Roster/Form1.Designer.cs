@@ -41,7 +41,7 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.LastNameTextBox = new System.Windows.Forms.TextBox();
             this.FirstNameTextBox = new System.Windows.Forms.TextBox();
-            this.NumberTextBox = new System.Windows.Forms.TextBox();
+            this.TeamNumberTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -60,7 +60,7 @@
             this.PlayersComboBox.Name = "PlayersComboBox";
             this.PlayersComboBox.Size = new System.Drawing.Size(116, 21);
             this.PlayersComboBox.TabIndex = 1;
-            this.PlayersComboBox.SelectionChangeCommitted += new System.EventHandler(this.PlayersComboBox_SelectionChangeCommitted);
+            this.PlayersComboBox.SelectedValueChanged += new System.EventHandler(this.PlayersComboBox_SelectedValueChanged);
             // 
             // label2
             // 
@@ -163,19 +163,19 @@
             this.FirstNameTextBox.Size = new System.Drawing.Size(116, 20);
             this.FirstNameTextBox.TabIndex = 12;
             // 
-            // NumberTextBox
+            // TeamNumberTextBox
             // 
-            this.NumberTextBox.Location = new System.Drawing.Point(136, 101);
-            this.NumberTextBox.Name = "NumberTextBox";
-            this.NumberTextBox.Size = new System.Drawing.Size(116, 20);
-            this.NumberTextBox.TabIndex = 13;
+            this.TeamNumberTextBox.Location = new System.Drawing.Point(136, 101);
+            this.TeamNumberTextBox.Name = "TeamNumberTextBox";
+            this.TeamNumberTextBox.Size = new System.Drawing.Size(116, 20);
+            this.TeamNumberTextBox.TabIndex = 13;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(272, 216);
-            this.Controls.Add(this.NumberTextBox);
+            this.Controls.Add(this.TeamNumberTextBox);
             this.Controls.Add(this.FirstNameTextBox);
             this.Controls.Add(this.LastNameTextBox);
             this.Controls.Add(this.ExitButton);
@@ -212,7 +212,7 @@
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.TextBox LastNameTextBox;
         private System.Windows.Forms.TextBox FirstNameTextBox;
-        private System.Windows.Forms.TextBox NumberTextBox;
+        private System.Windows.Forms.TextBox TeamNumberTextBox;
     }
 }
 
