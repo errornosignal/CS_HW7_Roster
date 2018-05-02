@@ -154,21 +154,21 @@
             this.LastNameTextBox.Location = new System.Drawing.Point(136, 75);
             this.LastNameTextBox.Name = "LastNameTextBox";
             this.LastNameTextBox.Size = new System.Drawing.Size(116, 20);
-            this.LastNameTextBox.TabIndex = 11;
+            this.LastNameTextBox.TabIndex = 3;
             // 
             // FirstNameTextBox
             // 
             this.FirstNameTextBox.Location = new System.Drawing.Point(136, 51);
             this.FirstNameTextBox.Name = "FirstNameTextBox";
             this.FirstNameTextBox.Size = new System.Drawing.Size(116, 20);
-            this.FirstNameTextBox.TabIndex = 12;
+            this.FirstNameTextBox.TabIndex = 2;
             // 
             // TeamNumberTextBox
             // 
             this.TeamNumberTextBox.Location = new System.Drawing.Point(136, 101);
             this.TeamNumberTextBox.Name = "TeamNumberTextBox";
             this.TeamNumberTextBox.Size = new System.Drawing.Size(116, 20);
-            this.TeamNumberTextBox.TabIndex = 13;
+            this.TeamNumberTextBox.TabIndex = 4;
             // 
             // Form1
             // 
